@@ -28,6 +28,11 @@ public class SavingService {
 
     public ResponseEntity<Object> createSaving(long customer_id, long balance){
 
+        if(customerRepository.findById(customer_id) == null){
+
+            return ResponseEntity.ok(customer_id+ " id'sine sahip kullanıcı bulunamadı.");
+        }
+
         SavingAccount savingAccount = new SavingAccount();
 
         Customer customer = customerRepository.findById(customer_id);
@@ -39,8 +44,7 @@ public class SavingService {
         savingAccount.setAccountNumber(accountNumber);
         savingAccount.setIbanNo(createNumber.iban(accountNumber));
 
-
-
+        customer.setSavingAccount(savingAccount);
         savingRepository.save(savingAccount);
         return ResponseEntity.ok().body("Birikim hesabı oluşturuldu");
     }
@@ -57,6 +61,10 @@ public class SavingService {
     public ResponseEntity<Object> reduceBalance(String accountNumber,double balance){
 
         SavingAccount savingAccount = savingRepository.findByAccountNumber(accountNumber);
+        if(balance>2000){
+
+            return ResponseEntity.ok().body("Tek seferde çekebileceğiniz max tutar 2000 TL");
+        }
 
         if(balance>savingAccount.getBalance())
             return ResponseEntity.ok().body("Bakiye yetersiz");

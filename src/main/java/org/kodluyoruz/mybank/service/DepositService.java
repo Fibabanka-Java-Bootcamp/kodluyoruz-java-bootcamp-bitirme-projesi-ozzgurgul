@@ -28,6 +28,11 @@ public class DepositService {
 
     public ResponseEntity<Object> createDeposit(long customer_id, long balance){
 
+        if(customerRepository.findById(customer_id) == null){
+
+            return ResponseEntity.ok(customer_id+ " id'sine sahip kullanıcı bulunamadı.");
+        }
+
         DepositAccount depositAccount = new DepositAccount();
 
         Customer customer = customerRepository.findById(customer_id);
@@ -39,7 +44,7 @@ public class DepositService {
         depositAccount.setAccountNumber(accountNumber);
         depositAccount.setIbanNo(createNumber.iban(accountNumber));
 
-
+        customer.setDepositAccount(depositAccount);
         depositRepository.save(depositAccount);
         return ResponseEntity.ok().body("Mevduat hesabı oluşturuldu");
     }
@@ -56,6 +61,10 @@ public class DepositService {
     public ResponseEntity<Object> reduceBalance(String accountNumber,double balance){
 
         DepositAccount depositAccount = depositRepository.findByAccountNumber(accountNumber);
+        if(balance>2000){
+
+            return ResponseEntity.ok().body("Tek seferde çekebileceğiniz max tutar 2000 TL");
+        }
 
         if(balance>depositAccount.getBalance())
             return ResponseEntity.ok().body("Bakiye yetersiz");

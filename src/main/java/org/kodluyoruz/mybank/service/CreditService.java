@@ -32,6 +32,11 @@ public class CreditService {
 
     public ResponseEntity<Object> createCreditCard(long customer_id,double limit){
 
+        if(customerRepository.findById(customer_id) == null){
+
+            return ResponseEntity.ok(customer_id+ " id'sine sahip kullanıcı bulunamadı.");
+        }
+
         Customer customer = customerRepository.findById(customer_id);
 
         CreditCard creditCard = new CreditCard();
@@ -39,8 +44,9 @@ public class CreditService {
         creditCard.setCardNumber(createNumber.createNumber());
         creditCard.setCurrentLimit(limit);
         creditCard.setTotalLimit(limit);
+        creditCard.setCustomer(customer);
 
-        customer.setCreditCard(creditCard);
+        //customer.setCreditCard(creditCard);
         customerRepository.save(customer);
 
         creditCardRepository.save(creditCard);
