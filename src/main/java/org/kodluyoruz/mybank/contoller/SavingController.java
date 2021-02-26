@@ -22,18 +22,48 @@ public class SavingController {
     @PostMapping("/addBalance/{accountNumber}/{balance}")
     public ResponseEntity<Object> addBalance(@PathVariable String accountNumber,@PathVariable double balance){
 
-        return savingService.addBalance(accountNumber,balance);
+        try {
+
+            return savingService.addBalance(accountNumber,balance);
+
+        } catch (Exception e) {
+
+            return ResponseEntity.ok(" Hesap numarası yanlış");
+
+        }
+
+
 
     }
     @PostMapping("/reduceBalance/{accountNumber}/{balance}")
     public ResponseEntity<Object> reduceBalance(@PathVariable String accountNumber,@PathVariable double balance){
 
-        return savingService.reduceBalance(accountNumber,balance);
+        try {
+
+            return savingService.reduceBalance(accountNumber,balance);
+
+        } catch (Exception e) {
+
+            return ResponseEntity.ok(" Hesap numarası yanlış");
+
+        }
+
 
     }
     @PostMapping("/transferToDeposit/{fromIban}/{toIban}/{amount}")
     public ResponseEntity<Object> transferToDeposit(@PathVariable String fromIban,@PathVariable String toIban,@PathVariable double amount){
-        return savingService.transferToDeposit(fromIban,toIban,amount);
+
+        try {
+
+            return savingService.transferToDeposit(fromIban,toIban,amount);
+
+        } catch (Exception e) {
+
+            return ResponseEntity.ok(" İban numarasını kontrol edin");
+
+        }
+
+
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RequestMapping("/customer/deposit")
 @RestController
@@ -22,13 +23,25 @@ public class DepositController {
     @PostMapping("/addBalance/{accountNumber}/{balance}")
     public ResponseEntity<Object> addBalance(@PathVariable String accountNumber,@PathVariable double balance){
 
-        return depositService.addBalance(accountNumber,balance);
+        try {
+            return depositService.addBalance(accountNumber,balance);
+        } catch (Exception e) {
+
+            return ResponseEntity.ok("Hesap numarası yanlış");
+
+        }
 
     }
     @PostMapping("/reduceBalance/{accountNumber}/{balance}")
     public ResponseEntity<Object> reduceBalance(@PathVariable String accountNumber,@PathVariable double balance){
 
-        return depositService.reduceBalance(accountNumber,balance);
+        try {
+            return depositService.reduceBalance(accountNumber,balance);
+        } catch (Exception e) {
+
+            return ResponseEntity.ok("Hesap numarası yanlış");
+
+        }
 
     }
 
@@ -39,6 +52,17 @@ public class DepositController {
 
     @PostMapping("/transferToSaving/{fromIban}/{toIban}/{amount}")
     public ResponseEntity<Object> transferToSaving(@PathVariable String fromIban,@PathVariable String toIban,@PathVariable double amount){
-        return depositService.transferToSaving(fromIban,toIban,amount);
+
+        try {
+
+            return depositService.transferToSaving(fromIban,toIban,amount);
+
+        } catch (Exception e) {
+
+            return ResponseEntity.ok(" İban numarasını kontrol edin");
+
+        }
+
+
     }
 }

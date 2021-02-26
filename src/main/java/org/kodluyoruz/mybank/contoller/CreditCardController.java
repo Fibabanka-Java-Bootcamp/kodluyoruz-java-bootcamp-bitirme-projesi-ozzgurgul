@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/creditCard")
 public class CreditCardController {
@@ -26,24 +25,43 @@ public class CreditCardController {
 
     @PostMapping("/reduceBalance/{cardNumber}/{amount}")
     public ResponseEntity<Object> reduceBalance(@PathVariable String cardNumber, @PathVariable double amount){
-        return creditService.reduceBalance(cardNumber,amount);
+
+        try {
+            return creditService.reduceBalance(cardNumber,amount);
+        } catch (Exception e) {
+
+            return ResponseEntity.ok("Hesap numarası yanlış");
+
+        }
+
     }
 
     @PostMapping("/payDebtFromAccount/{cardNumber}/{amount}/{accountNumber}")
     public ResponseEntity<Object> payDebtFromAccount(@PathVariable String cardNumber,@PathVariable double amount,@PathVariable String accountNumber){
-        return creditService.payDebtFromAccount(cardNumber,amount,accountNumber);
+
+        try {
+            return creditService.payDebtFromAccount(cardNumber,amount,accountNumber);
+        } catch (Exception e) {
+
+            return ResponseEntity.ok("Hesap numarası yanlış");
+        }
+
     }
 
     @PostMapping("/payDebtFromDebit/{debitCardNumber}/{amount}/{creditCardNumber}")
     public ResponseEntity<Object> debtFromDebit(@PathVariable String debitCardNumber,@PathVariable double amount,@PathVariable String creditCardNumber){
 
-        return creditService.debtFromDebit(debitCardNumber,amount,creditCardNumber);
+        try {
+            return creditService.debtFromDebit(debitCardNumber,amount,creditCardNumber);
+        } catch (Exception e) {
+
+            return ResponseEntity.ok("Hesap numarası yanlış");
+
+        }
     }
 
     @GetMapping("/getStates/{cardNumber}")
-    public List<Transaction> getStates(@PathVariable String cardNumber){
-        return creditService.getStates(cardNumber);
-    }
+    public List<Transaction> getStates(@PathVariable String cardNumber){ return creditService.getStates(cardNumber); }
 
     @GetMapping("/getDebt/{cardNumber}")
     public ResponseEntity<Object> getDebt(String cardNumber){
