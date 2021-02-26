@@ -27,6 +27,18 @@ public class CustomerController {
     public List<Customer> findAll(){
         return customerService.findAll();
     }
+    @DeleteMapping("/{id}")
+
+    public  ResponseEntity<Object> deleteCustomer(@PathVariable long id){
+
+        return customerService.deleteCustomer(id);
+    }
+    @PutMapping("/{id}/{name}/{surname}")
+
+    public  ResponseEntity<Object> updateCustomer(@PathVariable long id, @PathVariable String name, @PathVariable  String surname){
+
+        return customerService.updateCustomer(id,name,surname);
+    }
 
 }
 

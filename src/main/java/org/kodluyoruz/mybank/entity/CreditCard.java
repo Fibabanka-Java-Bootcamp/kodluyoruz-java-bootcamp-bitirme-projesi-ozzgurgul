@@ -25,7 +25,7 @@ public class CreditCard {
     private double currentLimit;
 
 
-    @OneToOne(mappedBy = "savingAccount")
+    @OneToOne(mappedBy = "creditCard")
     @JsonIgnore
     private Customer customer;
 

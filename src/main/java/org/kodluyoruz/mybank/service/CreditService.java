@@ -37,18 +37,16 @@ public class CreditService {
             return ResponseEntity.ok(customer_id+ " id'sine sahip kullanıcı bulunamadı.");
         }
 
-        Customer customer = customerRepository.findById(customer_id);
-
         CreditCard creditCard = new CreditCard();
+
+        Customer customer = customerRepository.findById(customer_id);
 
         creditCard.setCardNumber(createNumber.createNumber());
         creditCard.setCurrentLimit(limit);
         creditCard.setTotalLimit(limit);
-        creditCard.setCustomer(customer);
+       // creditCard.setCustomer(customer);
 
-        //customer.setCreditCard(creditCard);
-        customerRepository.save(customer);
-
+        customer.setCreditCard(creditCard);
         creditCardRepository.save(creditCard);
 
         return ResponseEntity.ok().body("Kredi kartı tanımlandı");

@@ -60,6 +60,7 @@ public class DepositService {
 
     public ResponseEntity<Object> reduceBalance(String accountNumber,double balance){
 
+
         DepositAccount depositAccount = depositRepository.findByAccountNumber(accountNumber);
         if(balance>2000){
 

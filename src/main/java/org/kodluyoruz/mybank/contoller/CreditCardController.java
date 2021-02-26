@@ -25,7 +25,7 @@ public class CreditCardController {
 
 
     @PostMapping("/reduceBalance/{cardNumber}/{amount}")
-    public ResponseEntity<Object> reduceBalance(@PathVariable String cardNumber,@PathVariable double amount){
+    public ResponseEntity<Object> reduceBalance(@PathVariable String cardNumber, @PathVariable double amount){
         return creditService.reduceBalance(cardNumber,amount);
     }
 
