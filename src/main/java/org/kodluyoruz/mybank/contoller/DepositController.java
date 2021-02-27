@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-@RequestMapping("/customer/deposit")
+@RequestMapping("/api/v1/customer/deposit")
 @RestController
 public class DepositController {
 
     @Autowired
     private DepositService depositService;
 
-    @PostMapping("/create/{id}/{balance}")
+    @PostMapping("/{id}/{balance}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createAccount(@PathVariable long id, @PathVariable long balance){
         return depositService.createDeposit(id,balance);

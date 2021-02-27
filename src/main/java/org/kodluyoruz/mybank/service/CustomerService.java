@@ -30,7 +30,6 @@ public class CustomerService {
 
         customerRepository.save(customer);
 
-
         return ResponseEntity.ok("Müşteri tanımlandı");
 
     }

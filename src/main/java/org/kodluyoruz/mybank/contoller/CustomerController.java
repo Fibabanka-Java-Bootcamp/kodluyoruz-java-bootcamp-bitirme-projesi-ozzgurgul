@@ -12,13 +12,13 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api/v1/customer")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/create/{name}/{surname}")
+    @PostMapping("/{name}/{surname}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createCustomer(@Valid @PathVariable String name, @Valid @PathVariable String surname){
         try {
@@ -33,12 +33,15 @@ public class CustomerController {
     public List<Customer> findAll(){
         return customerService.findAll();
     }
+
+
     @DeleteMapping("/{id}")
 
     public  ResponseEntity<Object> deleteCustomer(@PathVariable long id){
 
         return customerService.deleteCustomer(id);
     }
+
     @PutMapping("/{id}/{name}/{surname}")
 
     public  ResponseEntity<Object> updateCustomer(@PathVariable long id, @PathVariable String name, @PathVariable  String surname){

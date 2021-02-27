@@ -7,16 +7,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/deposit/debit")
+@RequestMapping("/api/v1/deposit/debit")
 public class DebitController {
 
     @Autowired
     private DebitService debitService;
 
-    @PostMapping("/create/{accountNumber}")
+    @PostMapping("/{accountNumber}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createDebit(@PathVariable String accountNumber){
-        return debitService.createDebit(accountNumber);
+
+        try {
+            return debitService.createDebit(accountNumber);
+        } catch (Exception e) {
+
+            return ResponseEntity.ok("Hesap numarası yanlış");
+
+        }
 
     }
 

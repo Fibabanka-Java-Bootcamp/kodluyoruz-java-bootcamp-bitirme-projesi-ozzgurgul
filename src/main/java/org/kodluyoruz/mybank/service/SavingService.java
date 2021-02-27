@@ -92,5 +92,25 @@ public class SavingService {
 
     }
 
+    public ResponseEntity<Object> transferToSaving(String fromIban,String toIban,double amount){
+
+        SavingAccount receiver = savingRepository.findByIbanNo(toIban);
+        SavingAccount sender =savingRepository.findByIbanNo(fromIban);
+
+        if(amount>sender.getBalance())
+            return ResponseEntity.ok().body("Yetersiz bakiye");
+
+        if(!receiver.getCustomer().equals(sender.getCustomer()))
+            return ResponseEntity.ok().body("Farklı kişiye transfer yapamazsınız");
+
+        sender.setBalance(sender.getBalance()-amount);
+        receiver.setBalance(receiver.getBalance()+amount);
+
+        savingRepository.save(receiver);
+        savingRepository.save(sender);
+
+        return ResponseEntity.ok().body("Transfer gerçekleştirildi");
+
+    }
 
 }

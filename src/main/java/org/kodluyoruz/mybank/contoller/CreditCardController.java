@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/creditCard")
+@RequestMapping("/api/v1/creditCard")
 public class CreditCardController {
 
     @Autowired
     private CreditService creditService;
 
-    @PostMapping("/create/{id}/{limit}")
+    @PostMapping("/{id}/{limit}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createCreditCard(@PathVariable long id,@PathVariable double limit){
         return creditService.createCreditCard(id,limit);

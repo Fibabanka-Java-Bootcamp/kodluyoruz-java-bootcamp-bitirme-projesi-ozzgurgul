@@ -6,14 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/customer/saving")
+@RequestMapping("/api/v1/customer/saving")
 @RestController
 public class SavingController {
 
     @Autowired
     private SavingService savingService;
 
-    @PostMapping("/create/{id}/{balance}")
+    @PostMapping("/{id}/{balance}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> createAccount(@PathVariable long id, @PathVariable long balance){
         return savingService.createSaving(id,balance);
@@ -63,6 +63,21 @@ public class SavingController {
 
         }
 
+
+    }
+
+    @PostMapping("/transferToSaving/{fromIban}/{toIban}/{amount}")
+    public ResponseEntity<Object> transferToSaving(@PathVariable String fromIban,@PathVariable String toIban,@PathVariable double amount){
+
+        try {
+
+            return savingService.transferToSaving(fromIban,toIban,amount);
+
+        } catch (Exception e) {
+
+            return ResponseEntity.ok(" İban numarasını kontrol edin");
+
+        }
 
     }
 

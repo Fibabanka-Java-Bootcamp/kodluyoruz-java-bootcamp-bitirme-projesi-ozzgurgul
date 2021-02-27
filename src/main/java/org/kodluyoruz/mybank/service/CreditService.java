@@ -57,7 +57,6 @@ public class CreditService {
         CreditCard creditCard = creditCardRepository.findByCardNumber(cardNumber);
 
 
-
         if((amount>creditCard.getCurrentLimit())){
             return ResponseEntity.ok().body("Yetersiz bakiye");
         }
@@ -78,6 +77,10 @@ public class CreditService {
 
         DepositAccount depositAccount =depositRepository.findByAccountNumber(accountNumber);
 
+        if(!creditCard.getCustomer().equals(depositAccount.getCustomer())){
+
+            return ResponseEntity.ok("Farklı hesaptan borç ödeyemezsiniz");
+        }
 
         if((amount>depositAccount.getBalance())){
             return ResponseEntity.ok().body("Yetersiz bakiye");
@@ -100,6 +103,12 @@ public class CreditService {
 
         DebitCard debitCard =debitRepository.findByCardNumber(debitCardNumber);
         CreditCard creditCard = creditCardRepository.findByCardNumber(creditCardNumber);
+
+        if(!creditCard.getCustomer().equals(debitCard.getDepositAccount().getCustomer())){
+
+            return ResponseEntity.ok("Farklı karttan borç ödeyemezsiniz");
+        }
+
         DepositAccount depositAccount = debitCard.getDepositAccount();
 
         if(amount>depositAccount.getBalance()){
